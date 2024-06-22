@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="home_page.css">
+    <title>ORDER MANAGEMENT SYSTEM</title>
+
+<style>
+     
+.modal {
+    padding:20px 20px;
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: white;
+    background-color: rgba(0,0,0,0.4);
+    border-radius:10px;
+    radius:10px;
+    border:none;
+}
+
+.modal-content {
+    background-color:#C4DFE6;
+    margin: 15% auto;
+    padding: 30px;
+    border: 1px solid #888;
+    width: 80%;
+    font-size:20px;
+    font-family:sans-serif;
+    color:white;
+    radius:5px;
+    
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="number"] {
+    border-radius: 5px; /* Change the border radius of the input fields */
+    padding: 10px;       /* Add some padding */
+    border: 1px solid grey; /* Add a border */
+    font-size: 16px;     /* Adjust the font size */
+    border:none;
+}
+
+/* Style the placeholder text */
+.modal-content input::placeholder {
+    color: grey;         /* Change the placeholder text color */
+    font-style: italic;  /* Change the font style */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+h1 {
+    color: blue;
+}
+body{
+    background-color: white;
+    text-align: center;
+}
+.div1{
+    padding: 20px 10px;
+    background-color: #003B46;
+    font-family:sans-serif;
+    font-size:20px;
+}
+.div2{
+    padding: 80px 80px;
+    background-color:WHITE;
+    border-radius: 5px;
+    width:800px;
+    margin:auto; 
+    box-sizing: border-box;
+    border-color: grey;
+    box-shadow: 10px 10px grey;
+
+}
+.div3{
+    padding:10px; 
+    font-size:large;
+    background-color:#C4DFE6;
+}
+h2{
+    color: white;
+}
+p{
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+    font-size: 30px;
+}
+.orderIt{
+    color:white;
+    padding:20px;
+    text-align:left;
+    font-size:30px;
+    font-family: sans-serif;
+
+}
+.gap{
+    background-color:white;
+    color:black;
+    text-align:left;
+    font-size:20px;
+}
+.div4{
+    background-color:#07575B;
+}
+.btn{
+    background-color:#07575B;
+    padding:20px;
+    border-radius:5px;
+    font-size:20px;
+    color:white;
+}
+.submit{
+    background-color:#07575b;
+    padding:20px;
+    font-size:20px;
+    color:white;
+    border-radius:5px;
+}
+
+
+</style>
+</head>
+<body>
+    <div class="div1" id="div1">
+        <h2>Awarded #1 in order management</h2>
+    </div>
+    <div class="gap" id="gap"> 
+        <p></p>
+        <p>Contact Us at customersuppport@orderit.com</p>
+        <p></p>
+    </div>
+   
+    <div class="div3" id="div3">
+        <div class="orderIt"><b>Orderit</b></div>
+    </div>
+    <div class="div4" id="div4">
+        <br>
+        <br>
+        <br>
+        <div class="div2" id="div2">
+            <p>OrderIt is an innovative order management system designed to streamline the process of adding and managing orders for businesses of all sizes. With OrderIt, users can easily add new orders, track existing ones, and efficiently manage their inventory.</P>
+            <button id="addOrderBtn" class="btn">Add Order</button>
+            <button onclick="window.location.href='/orders'" class="btn">View Orders</button>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+    <p><center>Copyright Rights Orderit.com<center></p>
+    <!-- Add Order Modal -->
+    <div id="addOrderModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add Order</h2>
+            <form id="addOrderForm">
+                <label for="order_item">Order Item    :</label>
+                <input type="text" id="order_item" name="order_item" required><br><br>
+                <label for="item_price">Item Price    :</label>
+                <input type="number" step="0.01" id="item_price" name="item_price" required><br><br>
+                <label for="item_quantity">Item Quantity:</label>
+                <input type="number" id="item_quantity" name="item_quantity" required><br><br>
+                <input type="submit" class="submit" value="Add Order">
+            </form>
+        </div>
+    </div>
+
+    <!-- Order Confirmation Modal -->
+    <div id="orderConfirmationModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeOrderModal">&times;</span>
+            <h2>Order Confirmation</h2>
+            <p id="orderDetails"></p>
+            <p>Order placed successfully!</p>
+        </div>
+    </div>
+
+    <script>
+        // Get the modals
+        var addOrderModal = document.getElementById("addOrderModal");
+        var orderConfirmationModal = document.getElementById("orderConfirmationModal");
+
+        // Get the button that opens the add order modal
+        var addOrderBtn = document.getElementById("addOrderBtn");
+
+        // Get the <span> elements that close the modals
+        var spans = document.getElementsByClassName("close");
+
+        // When the user clicks the button, open the add order modal 
+        addOrderBtn.onclick = function() {
+            addOrderModal.style.display = "block";
+        } 
+
+        // When the user clicks on <span> (x), close the modals
+        for (let i = 0; i < spans.length; i++) {
+            spans[i].onclick = function() {
+                addOrderModal.style.display = "none";
+                orderConfirmationModal.style.display = "none";
+            }
+        } 
+
+        // When the user clicks anywhere outside of the modals, close them
+        window.onclick = function(event) {
+            if (event.target == addOrderModal) {
+                addOrderModal.style.display = "none";
+            } else if (event.target == orderConfirmationModal) {
+                orderConfirmationModal.style.display = "none";
+            }
+        }
+
+        // Handle form submission
+        document.getElementById("addOrderForm").onsubmit = function(event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+
+            fetch('/add', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json()).then(data => {
+                addOrderModal.style.display = "none";
+                document.getElementById("orderDetails").innerText = `Order Item: ${data.order_item}\nTotal Cost: $${data.total_cost}`;
+                orderConfirmationModal.style.display = "block";
+            }).catch(error => {
+                alert('Error:', error);
+            });
+        };
+    </script>
+</body>
+</html>

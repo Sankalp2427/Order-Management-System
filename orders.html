@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders </title>
+    <style>
+        
+        .div1{
+            padding: 20px 10px;
+            background-color: #003B46;
+            font-family:sans-serif;
+            font-size:20px;
+        }
+        .gap{
+            background-color:white;
+            color:black;
+            text-align:left;
+            font-size:20px;
+        }
+        h2{
+            color:white;
+            text-align:center;
+        }
+        p{
+            font-size:30px;
+            font-family:sans-serif;
+        }
+        .div3{
+            padding:10px; 
+            font-size:large;
+            background-color:#C4DFE6;
+        }
+        .orderIt{
+            color:white;
+            padding:20px;
+            text-align:left;
+            font-size:30px;
+            font-family: sans-serif;
+        
+        }
+        
+        table, th, td{
+            margin:0;
+            padding:16px;
+            box-sizing:border-box;
+            font-family:sans-serif;
+            justify-content: center;
+            align-items: center;
+            min height:80vh;
+            border-collapse:collapse;
+            text-align:center;
+        }
+        .table_header{
+            width:100%;
+            height:10%;
+            background-color:#fff4;
+            padding: 14px 16px;
+        }
+        .table_body{
+            width:95%;
+            max-height:89%;
+            background-color:#fffb;
+            margin: 14px 16px;
+            border-radius: 10px;
+            overflow:auto;
+        }
+        table{
+            width:100%;
+        }
+        thead th{
+            position: sticky;
+            top=0;
+            left=0;
+            background-color:#07575B;
+            color:white;
+        }
+        tbody tr:nth-child(even){
+            background-color:#0000000b;
+        }
+        tbody tr:hover{
+            background-color:#fff6;
+        }
+        .action1{
+            padding:10px;
+            background-color:#07575B;
+            color:white; 
+            font-size:10px;
+        }
+        .action2{
+            padding:10px;
+            background-color:#07575B;
+            color:white; 
+            font-size:10px;
+        }
+        .home{
+            padding:10px;
+            background-color:#07575B;
+            color:white; 
+            font-size:10px;
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <div class="div1" id="div1">
+        <h2>Awarded #1 in order management</h2>
+    </div>
+    <div class="gap" id="gap"> 
+        <p></p>
+        <p>Contact Us at customersuppport@orderit.com <a id="home" class="home" href="{{ url_for('index') }}">Home</a></p>
+        <p></p>
+    </div>
+    
+    <div class="div3" id="div3">
+        <div class="orderIt"><b>Orderit</b></div>
+        
+    </div>
+    <main class="table">
+        <section class="table_header">
+            <h2>Orders List</h2>
+        </section>
+        <section class="table_body">
+        <table>
+            <thead>
+            <tr>
+                <th>Order Item</th>
+                <th>Item Price</th>
+                <th>Item Quantity</th>
+                <th>Total Cost</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order[1] }}</td>
+                    <td>${{ order[2] }}</td>
+                    <td>{{ order[3] }}</td>
+                    <td>${{ order[2] * order[3] }}</td>
+                    <td>
+                   <center> <a id="action1" class="action1" href="{{ url_for('edit', order_id=order[0]) }}">Edit</a>
+                    <a class="action2" href="{{ url_for('delete', order_id=order[0]) }}">Delete</a></center>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </section>
+    </table>
+      
+</body>
+</html>
